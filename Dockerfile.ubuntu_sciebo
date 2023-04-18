@@ -1,0 +1,22 @@
+FROM ubuntu:latest
+
+RUN apt-get update && apt-get upgrade -y 
+RUN apt-get install -y wget 
+RUN apt-get install -y gpg
+
+RUN wget -nv https://download.owncloud.com/desktop/ownCloud/stable/latest/linux/Ubuntu_22.04/Release.key -O - | gpg --dearmor | tee /etc/apt/trusted.gpg.d/owncloud.gpg > /dev/null
+
+RUN echo 'deb https://download.owncloud.com/desktop/ownCloud/stable/latest/linux/Ubuntu_22.04/ /' | tee -a /etc/apt/sources.list.d/owncloud.list
+
+RUN apt-get update && apt-get install -y owncloud-client 
+RUN apt-get install cron
+
+RUN touch /etc/cron.d/autocrf-cron
+
+RUN chmod 0644 /etc/cron.d/autocrf-cron
+
+RUN crontab /etc/cron.d/autocrf-cron
+
+RUN touch /var/log/cron.log
+
+CMD cron && tail -f /var/log/cron.log
