@@ -9,6 +9,6 @@ docker build -t ubuntu-sciebo -f ./Dockerfile.ubuntu_sciebo .
 ```
 
 #### then run container:
+<!--- docker run -it ubuntu-sciebo bash ---> 
 
-<!---  docker run -it ubuntu-sciebo bash  ---> 
 
